@@ -1,13 +1,39 @@
 import React, {Component} from 'react';
-import Post from './Post';
+import InstaService from '../services/instaService';
 
+// 52:10 YouTube
 
 class Posts extends Component {
+
+    InstaService = new InstaService();
+    state = {
+        posts: [],
+        error: false
+    }
+
+    updatePosts() {
+        this.InstaService.getAllPosts()
+        .then(this.onPostsLoaded)
+        .catch(this.onError);
+    }
+
+    onPostsLoaded = (posts) => {
+        this.setState({
+            posts,
+            error: false
+        })
+    }
+
+    onError = (err) => {
+        this.setState({
+            error: true
+        })
+    }
+
     render() {
         return (
             <div className="left">
-                <Post src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1000&q=80" alt="inst" />
-                <Post src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FyfGVufDB8fDB8&ixlib=rb-1.2.1&w=1000&q=80" alt="second" />
+               
             </div>
         )
     }
